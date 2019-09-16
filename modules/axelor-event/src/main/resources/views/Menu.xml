@@ -8,26 +8,24 @@
 
   <menuitem title="Event" name="event-menu" action="event-all" parent="event-managenment-menu"/>
   <action-view name="event-all" title="event-action-view" model="com.axelor.event.db.Event">
+  <view type="cards" name="Event-card-view"/>
   <view type="form" name="event-form"/>
   <view type="grid" name="event-grid"/>
+  <view type="calendar" name="event-calendar-view"/>
   </action-view>
 
 <menuitem title="Event Registration" name="eventRegistration-menu" action="eventReg-all" parent="event-managenment-menu"/>
   <action-view name="eventReg-all" title="eventReg-action-view" model="com.axelor.event.db.EventRegistration">
-  <view type="form" name="eventRegistration-form"/>
   <view type="grid" name="eventRegistration-grid"/>
+ <view type="form" name="eventRegistration-form"/>
+
   </action-view>
 
   <menuitem title="Address" name="address-menu" action="address-show" parent="event-managenment-menu"/>
 
   <action-view name="address-show" title="address-action-view" model="com.axelor.event.db.Address">
+   <view type="grid" name="address-grid"/>
   <view type="form" name="address-form"/>
-  <view type="grid" name="address-grid"/>
-  </action-view>
 
-<menuitem title="Discount" name="dicount-menu" action="discount-all" parent="event-managenment-menu"/>
-<action-view name="discount-all" title="discount-action-view" model="com.axelor.event.db.Discount">
-  <view type="form" name="discount-form"/>
-  <view type="grid" name="discount-grid"/>
   </action-view>
   </object-views>

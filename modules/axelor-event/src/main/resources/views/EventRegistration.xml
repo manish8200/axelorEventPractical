@@ -16,17 +16,22 @@
 
 
 
-  <form model="com.axelor.event.db.EventRegistration" title="EventRegistration" name="eventRegistration-form" width="large">
+  <form model="com.axelor.event.db.EventRegistration"  title="EventRegistration" name="eventRegistration-form" width="large">
   <panel title="Event Registration" colSpan="6">
 
-  <field name="event"/>
+ <field name="event" onChange="action-record-set-event-address"/>
   <field name="name"/>
-  <field name="email"/>
+  <field name="email" widget="email"/>
   <field name="address"/>
   <field name="registrationDate"/>
   <field name="amount"/>
 
   </panel>
   </form>
+
+<action-record name="action-record-set-event-address" model="com.axelor.event.db.EventRegistration">
+<field name="address" expr="eval: event.address"/>
+</action-record>
+
 
   </object-views>

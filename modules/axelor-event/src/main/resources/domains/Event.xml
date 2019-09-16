@@ -10,13 +10,13 @@
 <datetime name="startDate" title="Start Date" />
 <datetime name="endDate" title="End Date" />
 <many-to-one name="address" ref="Address"/>
-<date name="registrationOpen" title="Registration Open Date"/>
-<date name="registrationClose" title="Registration Close Date"/>
+<datetime name="registrationOpen" title="Registration Open Date"/>
+<datetime name="registrationClose" title="Registration Close Date"/>
 <integer name="capacity" title="Capacity"/>
 <decimal name="eventFees" title="Event Fees"/>
 <string name="descrition" title="Description"/>
 <one-to-many name="discounts" ref="Discount"/>
-<one-to-many name="eventRegistration" ref="EventRegistration"/>
+<one-to-many name="eventRegistration" ref="EventRegistration" />
 <integer name="totalEntry" title="Total Entry" readonly="true"/>
 <decimal name="amountCollected" title="Amount Collected" readonly="true"/>
 <decimal name="totalDiscount" title="Total Discount" readonly="true" />

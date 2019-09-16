@@ -17,10 +17,13 @@
   <form model="com.axelor.event.db.Discount" title="Discount" name="discount-form" width="large">
   <panel title="Discount" colSpan="3">
   <field name="beforeDays"/>
-  <field name="discountPercentage"/>
+  <field name="discountPercentage" onChange="action-method-event-setdiscountAmount"/>
   <field name="discountAmount"/>
   </panel>
   </form>
 
+<action-method name="action-method-event-setdiscountAmount">
+<call class="com.axelor.event.db.web.EventController" method="setDiscountAmount"/>
+</action-method>
 
   </object-views>

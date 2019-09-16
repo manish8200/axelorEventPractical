@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
+
+  <grid model="com.axelor.event.db.Event" title="Events" name="event-grid">
+    <field name="flatHouseNo" />
+  <field name="reference"/>
+  <field name="startDate"/>
+  <field name="endDate"/>
+  <field name="address"/>
+  <field name="registrationOpen"/>
+  <field name="registrationClose"/>
+  <field name="capacity"/>
+  <field name="eventFees"/>
+  <field name="descrition"/>
+  <field name="discounts"/>
+  <field name="eventRegistration"/>
+  <field name="totalEntry"/>
+  <field name="amountCollected"/>
+  <field name="totalDiscount"/>
+
+  </grid>
+
+
+
+  <form model="com.axelor.event.db.Event" title="Event" name="event-form" width="large" onSave="action-validate-event-totalOfEntry">
+  <toolbar>
+  <button name="printEventBtn" title="Print Event" onClick="action-print-Event" />
+  </toolbar>
+  
+  <panel title="Event" colSpan="12">
+  <field name="reference"/>
+  <field name="startDate" />
+  <field name="endDate" onChange="action-validate-event-start-date"/>
+  <field name="address"/>
+  <field name="registrationOpen" />
+  <field name="registrationClose" onChange="action-validate-event-registration-date"/>
+  <field name="capacity"/>
+  <field name="eventFees"/>
+  <field name="descrition"/>
+  <field name="discounts">
+  <editor >
+   <field name="beforeDays"/>
+  <field name="discountPercentage" onChange="action-method-event-setdiscountAmount"/>
+  <field name="discountAmount"/>
+    </editor>
+  </field>
+  <field name="eventRegistration" onChange="action-validate-eventRegistration-Date" onSelect="action-method-set-registration-Amoubnt">
+  <editor>
+    <field name="event"/>
+  <field name="name"/>
+  <field name="email"  onChange="action-method-event-setAmountCollected"/>
+  <field name="address"/>
+  <field name="registrationDate" onChange="action-method-set-registration-Amoubnt"/>
+  <field name="amount"/>
+  </editor>
+  
+  </field>
+  
+  <field name="totalEntry"/>
+  <field name="amountCollected"/>
+  <field name="totalDiscount"/>
+
+  </panel>
+  </form>
+  
+	<action-report output="pdf" name="action-print-Event"
+		design="Event.rptdesign">
+		<param name="param" expr="eval:id" />
+	</action-report>
+  
+  <action-method name="action-method-set-registration-Amoubnt">
+  <call class="com.axelor.event.db.web.EventController" method="setAmount"/>
+  </action-method>
+  
+  <action-validate name="action-validate-event-totalOfEntry">
+  <error message="Total no of Entry Exceeds" if="eval: totalEntry &gt; capacity "/>
+  </action-validate>
+  
+  <action-validate name="action-validate-eventRegistration-Date">
+  <error message="Registration Date is Invalid" if="eval eventRegistration.registrationDate &gt; registrationClose"/>
+  </action-validate>
+  
+  <action-validate name="action-validate-event-registration-date">
+  <error message="Registration Date is invalid" if="eval: registrationOpen &gt; registrationClose "/>
+  </action-validate>
+  
+  <action-validate name="action-validate-event-start-date">
+  <error message="Start Date is invalid" if="eval: startDate &gt; endDate "/>
+  </action-validate>
+
+<action-method name="action-method-event-setdiscountAmount">
+<call class="com.axelor.event.db.web.EventController" method="setDiscountAmount"/>
+</action-method>
+
+<action-method name="action-method-event-setAmountCollected">
+<call class="com.axelor.event.db.web.EventController" method="setAmountCollected"/>
+</action-method>
+
+  </object-views>

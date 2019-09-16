@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
+
+  <menuitem title="Event Management" name="event-managenment-menu"/>
+
+  <menuitem title="Event" name="event-menu" action="event-all" parent="event-managenment-menu"/>
+  <action-view name="event-all" title="event-action-view" model="com.axelor.event.db.Event">
+  <view type="form" name="event-form"/>
+  <view type="grid" name="event-grid"/>
+  </action-view>
+
+<menuitem title="Event Registration" name="eventRegistration-menu" action="eventReg-all" parent="event-managenment-menu"/>
+  <action-view name="eventReg-all" title="eventReg-action-view" model="com.axelor.event.db.EventRegistration">
+  <view type="form" name="eventRegistration-form"/>
+  <view type="grid" name="eventRegistration-grid"/>
+  </action-view>
+
+  <menuitem title="Address" name="address-menu" action="address-show" parent="event-managenment-menu"/>
+
+  <action-view name="address-show" title="address-action-view" model="com.axelor.event.db.Address">
+  <view type="form" name="address-form"/>
+  <view type="grid" name="address-grid"/>
+  </action-view>
+
+<menuitem title="Discount" name="dicount-menu" action="discount-all" parent="event-managenment-menu"/>
+<action-view name="discount-all" title="discount-action-view" model="com.axelor.event.db.Discount">
+  <view type="form" name="discount-form"/>
+  <view type="grid" name="discount-grid"/>
+  </action-view>
+  </object-views>

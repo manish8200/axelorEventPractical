@@ -9,20 +9,45 @@ import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
 import com.google.inject.Inject;
 import java.math.BigDecimal;
+import java.util.List;
 
 public class EventController extends JpaSupport {
+
+ 
+  
+  public void setEventRegList(ActionRequest request, ActionResponse response) {
+	  EventRegistration event = request.getContext().asType(EventRegistration.class);
+	  
+	  if(request.getContext().getParent() != null) {
+	  response.setValue("event", request.getContext().getParent().asType(Event.class));
+	  response.setAttr("event", "hidden", true);
+  }
+  }
 
   @Inject EventService service;
 
   public void setDiscountAmount(ActionRequest request, ActionResponse response) {
     Discount discount = request.getContext().asType(Discount.class);
     Event event = request.getContext().getParent().asType(Event.class);
+    if (event.getEventFees() != null) {
+      BigDecimal discountAmount =
+          (discount.getDiscountPercentage().multiply(event.getEventFees()))
+              .divide(new BigDecimal(100));
+      System.out.println(discountAmount);
+      response.setValue("discountAmount", discountAmount);
+    } else {
+      response.setValue("discountAmount", BigDecimal.ZERO);
+    }
+  }
 
-    BigDecimal discountAmount =
-        (discount.getDiscountPercentage().multiply(event.getEventFees()))
-            .divide(new BigDecimal(100));
-    System.out.println(discountAmount);
-    response.setValue("discountAmount", discountAmount);
+  public void setDisCountList(ActionRequest request, ActionResponse response) {
+    Event event = request.getContext().asType(Event.class);
+    List<Discount> discountList = service.setDiscountAmount(event);
+    if(discountList != null) {
+    response.setValue("discounts", discountList);
+    }else {
+    	response.setValue("discounts", null);
+    }
   }
 
   public void setTotalAmount(ActionRequest request, ActionResponse response) {
@@ -33,13 +58,14 @@ public class EventController extends JpaSupport {
 
   public void setAmount(ActionRequest request, ActionResponse response) {
     EventRegistration eventReg = request.getContext().asType(EventRegistration.class);
+    
+    if(request.getContext().getParent() != null) {
     Event event = request.getContext().getParent().asType(Event.class);
-
     BigDecimal amount = service.setAmount(event, eventReg);
 
     response.setValue("amount", amount);
   }
-
+  }
   public void setTotalDiscountAmount(ActionRequest request, ActionResponse response) {
     Event event = request.getContext().asType(Event.class);
     BigDecimal TotalAmount = service.setTotalAmount(event);
@@ -52,4 +78,5 @@ public class EventController extends JpaSupport {
 
     response.setValue("totalDiscount", totalDiscount);
   }
+   
 }

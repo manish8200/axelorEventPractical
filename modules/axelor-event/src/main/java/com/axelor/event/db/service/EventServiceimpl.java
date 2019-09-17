@@ -5,6 +5,7 @@ import com.axelor.event.db.Event;
 import com.axelor.event.db.EventRegistration;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EventServiceimpl implements EventService {
@@ -12,19 +13,19 @@ public class EventServiceimpl implements EventService {
   @Override
   public BigDecimal setAmount(Event event, EventRegistration eventReg) {
     // TODO Auto-generated method stub
-    if (event.getDiscounts() != null) {
+    if (event.getDiscounts() != null && event.getRegistrationClose() != null) {
       LocalDateTime evenRegDate = eventReg.getRegistrationDate();
       LocalDateTime eventCloseDate = event.getRegistrationClose();
       BigDecimal discountAmount = BigDecimal.ZERO;
       BigDecimal EventAmount = event.getEventFees();
-      List<Discount> discount = event.getDiscounts();
+      List<Discount> discountList = event.getDiscounts();
 
-      for (Discount discount2 : discount) {
+      for (Discount discount : discountList) {
         int differenceOfDays = eventCloseDate.getDayOfMonth() - evenRegDate.getDayOfMonth();
         System.err.println(differenceOfDays);
-        int discountbeforedays = discount2.getBeforeDays();
+        int discountbeforedays = discount.getBeforeDays();
         if (differenceOfDays >= discountbeforedays) {
-          discountAmount = EventAmount.subtract(discount2.getDiscountAmount());
+          discountAmount = EventAmount.subtract(discount.getDiscountAmount());
           break;
         } else {
           discountAmount = event.getEventFees();
@@ -32,7 +33,7 @@ public class EventServiceimpl implements EventService {
       }
       return discountAmount;
     } else {
-      return BigDecimal.ZERO;
+      return event.getEventFees();
     }
   }
 
@@ -47,4 +48,41 @@ public class EventServiceimpl implements EventService {
 
     return TotalAmount;
   }
+
+  @Override
+  public List<Discount> setDiscountAmount(Event event) {
+    // TODO Auto-generated method stub
+    BigDecimal discountPercentage = BigDecimal.ZERO;
+    BigDecimal DiscountAmount = BigDecimal.ZERO;
+    List<Discount> discount2 = new ArrayList();
+    System.err.println(event.getDiscounts());
+    if(event.getDiscounts() != null) {
+    List<Discount> discountList = event.getDiscounts();
+    for (Discount discount : discountList) {
+     
+      discountPercentage = discount.getDiscountPercentage();
+      DiscountAmount = event.getEventFees().multiply(discountPercentage);
+
+      discount.setDiscountAmount(DiscountAmount);
+      discount2.add(discount);
+    }
+    
+    return discount2;
+    }else {
+    	return discount2;
+    }
+  }
+
+/*@Override
+public List<EventRegistration> setEventReg(Event event) {
+	// TODO Auto-generated method stub
+	String ref = event.getReference();
+	List<EventRegistration> eventRegList = event.getEventRegistration();
+	for (EventRegistration eventRegistration : eventRegList) {
+		eventRegistration.setEvent(event.getReference());
+	}
+	
+	
+	return null;
+}*/
 }

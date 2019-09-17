@@ -16,22 +16,30 @@
 
 
 
-  <form model="com.axelor.event.db.EventRegistration"  title="EventRegistration" name="eventRegistration-form" width="large">
+  <form model="com.axelor.event.db.EventRegistration"  title="EventRegistration" name="eventRegistration-form" width="large" onNew="action-method-setEvent-From-EventContext">
   <panel title="Event Registration" colSpan="6">
 
  <field name="event" onChange="action-record-set-event-address"/>
   <field name="name"/>
   <field name="email" widget="email"/>
   <field name="address"/>
-  <field name="registrationDate"/>
+  <field name="registrationDate" onChange="action-method-event-setAmountCollected"/>
   <field name="amount"/>
 
   </panel>
   </form>
+  
+  <action-method name="action-method-setEvent-From-EventContext">
+  <call class="com.axelor.event.db.web.EventController" method="setEventRegList"/>
+  </action-method>
 
 <action-record name="action-record-set-event-address" model="com.axelor.event.db.EventRegistration">
 <field name="address" expr="eval: event.address"/>
 </action-record>
+
+<action-method name="action-method-event-setAmountCollected">
+<call class="com.axelor.event.db.web.EventController" method="setAmount"/>
+</action-method>
 
 
   </object-views>

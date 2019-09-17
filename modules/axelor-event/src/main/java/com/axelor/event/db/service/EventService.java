@@ -13,6 +13,6 @@ public interface EventService {
   BigDecimal setTotalAmount(Event event);
 
   List<Discount> setDiscountAmount(Event event);
-  
- /* List<EventRegistration> setEventReg(Event event);
-*/}
+
+  BigDecimal setEventAmount(EventRegistration eventReg);
+}

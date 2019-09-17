@@ -78,5 +78,12 @@ public class EventController extends JpaSupport {
 
     response.setValue("totalDiscount", totalDiscount);
   }
-   
+  
+  public void setEventRegistrationAmount(ActionRequest request, ActionResponse response) {
+	  EventRegistration eventReg = request.getContext().asType(EventRegistration.class);
+	  if(request.getContext().getParent() == null) {
+	  BigDecimal amount = service.setEventAmount(eventReg);
+	  response.setValue("amount", amount);
+  }
+  }
 }

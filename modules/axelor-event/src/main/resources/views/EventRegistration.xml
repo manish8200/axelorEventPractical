@@ -23,11 +23,14 @@
   <field name="name"/>
   <field name="email" widget="email"/>
   <field name="address"/>
-  <field name="registrationDate" onChange="action-method-event-setAmountCollected"/>
+  <field name="registrationDate" onChange="action-method-event-setAmountCollected,action-method-event-setAmount"/>
   <field name="amount"/>
 
   </panel>
   </form>
+  <action-validate name="action-validate-eventReg-DAte">
+  <error message="EventRegistRation Date is Invalid" if="eval: event.registrationClose &gt; registrationDate"/>
+  </action-validate>
   
   <action-method name="action-method-setEvent-From-EventContext">
   <call class="com.axelor.event.db.web.EventController" method="setEventRegList"/>
@@ -41,5 +44,8 @@
 <call class="com.axelor.event.db.web.EventController" method="setAmount"/>
 </action-method>
 
+<action-method name="action-method-event-setAmount">
+<call class="com.axelor.event.db.web.EventController" method="setEventRegistrationAmount"/>
+</action-method>
 
   </object-views>

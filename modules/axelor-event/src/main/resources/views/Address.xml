@@ -1,30 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <object-views xmlns="http://axelor.com/xml/ns/object-views"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
 
-  <grid model="com.axelor.event.db.Address" title="Address" name="address-grid">
-    <field name="flatHouseNo" />
-  <field name="street"/>
-  <field name="landMark"/>
-  <field name="city"/>
-  <field name="country"/>
-  <field name="fullName"/>
+	<grid model="com.axelor.event.db.Address" title="Address" name="address-grid">
+		<field name="flatHouseNo" />
+		<field name="street" />
+		<field name="landMark" />
+		<field name="city" />
+		<field name="country" />
+		<field name="fullName" />
+	</grid>
 
-  </grid>
+	<form model="com.axelor.event.db.Address" title="Address" name="address-form"
+		width="large">
+		<panel title="Address" colSpan="6">
+			<field name="flatHouseNo" />
+			<field name="street" />
+			<field name="landMark" />
+			<field name="city" />
+			<field name="country" />
+			<field name="fullName" />
+		</panel>
+	</form>
 
-
-
-  <form model="com.axelor.event.db.Address" title="Address" name="address-form" width="large">
-  <panel title="Address" colSpan="6">
-  <field name="flatHouseNo" />
-  <field name="street"/>
-  <field name="landMark"/>
-  <field name="city"/>
-  <field name="country"/>
-  <field name="fullName"/>
-  </panel>
-  </form>
-
-
-  </object-views>
+</object-views>

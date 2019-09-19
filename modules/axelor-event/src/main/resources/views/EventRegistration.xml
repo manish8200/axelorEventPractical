@@ -1,51 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <object-views xmlns="http://axelor.com/xml/ns/object-views"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
 
-  <grid model="com.axelor.event.db.EventRegistration" title="EventsRegistration" name="eventRegistration-grid">
-    <field name="flatHouseNo" />
-  <field name="event"/>
-  <field name="name"/>
-  <field name="email"/>
-  <field name="address"/>
-  <field name="registrationDate"/>
-  <field name="amount"/>
+	<grid model="com.axelor.event.db.EventRegistration" title="EventsRegistration"
+		name="eventRegistration-grid">
+		<field name="flatHouseNo" />
+		<field name="event" />
+		<field name="name" />
+		<field name="email" />
+		<field name="address" />
+		<field name="isEmailSent" />
+		<field name="registrationDate" />
+		<field name="amount" />
+	</grid>
 
-  </grid>
+	<form model="com.axelor.event.db.EventRegistration" title="EventRegistration"
+		name="eventRegistration-form" width="large"
+		onNew="action-EventRegistration-method-hideAndSet-Event">
+		<panel title="Event Registration" colSpan="6">
+			<field name="event" onChange="action-eventRegistration-record-get-event-address" />
+			<field name="name" />
+			<field name="email" widget="email" />
+			<field name="isEmailSent" />
+			<field name="address" />
+			<field name="registrationDate"
+				onChange="action-eventRegistration-validate-event-registationdate,action-eventRegistration-method-calculate-AmountFromEventForm,action-eventRegistion-method-calculate-AmountFromEventRegForm" />
+			<field name="amount" />
+		</panel>
+	</form>
 
+	<action-method name="action-EventRegistration-method-hideAndSet-Event">
+		<call class="com.axelor.event.web.EventRegistraionController"
+			method="setEventRegList" />
+	</action-method>
 
+	<action-record name="action-eventRegistration-record-get-event-address"
+		model="com.axelor.event.db.EventRegistration">
+		<field name="address" expr="eval: event.address" />
+	</action-record>
 
-  <form model="com.axelor.event.db.EventRegistration"  title="EventRegistration" name="eventRegistration-form" width="large" onNew="action-method-setEvent-From-EventContext">
-  <panel title="Event Registration" colSpan="6">
+	<action-method
+		name="action-eventRegistration-method-calculate-AmountFromEventForm">
+		<call class="com.axelor.event.web.EventRegistraionController"
+			method="setEventRegistrationAmount" />
+	</action-method>
 
- <field name="event" onChange="action-record-set-event-address"/>
-  <field name="name"/>
-  <field name="email" widget="email"/>
-  <field name="address"/>
-  <field name="registrationDate" onChange="action-method-event-setAmountCollected,action-method-event-setAmount"/>
-  <field name="amount"/>
+	<action-method
+		name="action-eventRegistion-method-calculate-AmountFromEventRegForm">
+		<call class="com.axelor.event.web.EventRegistraionController"
+			method="setAmount" />
+	</action-method>
 
-  </panel>
-  </form>
-  <action-validate name="action-validate-eventReg-DAte">
-  <error message="EventRegistRation Date is Invalid" if="eval: event.registrationClose &gt; registrationDate"/>
-  </action-validate>
-  
-  <action-method name="action-method-setEvent-From-EventContext">
-  <call class="com.axelor.event.db.web.EventController" method="setEventRegList"/>
-  </action-method>
+	<action-validate
+		name="action-eventRegistration-validate-event-registationdate">
+		<error message="Registration Close Date Wrong."
+			if="event.registrationClose &lt; registrationDate.toLocalDate()  &amp;&amp;  event.registrationClose != null " />
+		<error message="Registration Open date Wrong"
+			if="event.registrationOpen &gt; registrationDate.toLocalDate()  &amp;&amp;  event.registrationOpen != null " />
+	</action-validate>
 
-<action-record name="action-record-set-event-address" model="com.axelor.event.db.EventRegistration">
-<field name="address" expr="eval: event.address"/>
-</action-record>
-
-<action-method name="action-method-event-setAmountCollected">
-<call class="com.axelor.event.db.web.EventController" method="setAmount"/>
-</action-method>
-
-<action-method name="action-method-event-setAmount">
-<call class="com.axelor.event.db.web.EventController" method="setEventRegistrationAmount"/>
-</action-method>
-
-  </object-views>
+</object-views>

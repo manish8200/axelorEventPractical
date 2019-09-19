@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<domain-models
-  xmlns="http://axelor.com/xml/ns/domain-models"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/domain-models
   http://axelor.com/xml/ns/domain-models/domain-models_5.1.xsd">
 
-<module package="com.axelor.event.db" name="event"/>
-<entity name="Address" cacheable="true">
-<string name="flatHouseNo" title="flat/House Number"/>
-<string name="street" title="Street"/>
-<string name="landMark" title="LandMark"/>
-<string name="city" title="City"/>
-<string name="country" title="Country"/>
-<string name="fullName" title="Full Address" readonly="true" namecolumn="true" search="flatHouseNo,street,landMark,city,country" >
+	<module package="com.axelor.event.db" name="event" />
+	<entity name="Address" cacheable="true">
+		<string name="flatHouseNo" title="flat/House Number" />
+		<string name="street" title="Street" />
+		<string name="landMark" title="LandMark" />
+		<string name="city" title="City" />
+		<string name="country" title="Country" />
+		<string name="fullName" title="Full Address" readonly="true"
+			namecolumn="true" search="flatHouseNo,street,landMark,city,country">
     <![CDATA[
     if ( flatHouseNo == null && street == null && city == null && landMark == null && country == null)
     return null;
     else
     return flatHouseNo + " " + street + " " + landMark + " " + city  + " " + country;
     ]]></string>
-</entity>
+	</entity>
 
 
 </domain-models>

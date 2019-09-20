@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <domain-models xmlns="http://axelor.com/xml/ns/domain-models"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/domain-models
   http://axelor.com/xml/ns/domain-models/domain-models_5.1.xsd">
-  <module package="com.axelor.event.db" name="event" />
+	<module package="com.axelor.event.db" name="event" />
 
-  <entity name="Discount" cacheable="true">
-    <integer name="beforeDays" title="Before Days" />
-    <decimal name="discountPercentage" title="Discount Percentage" />
-    <decimal name="discountAmount" title="Discount Amount" />
+	<entity name="Discount" cacheable="true">
+		<integer name="beforeDays" title="Before Days" />
+		<decimal name="discountPercentage" title="Discount Percentage" />
+		<decimal name="discountAmount" title="Discount Amount" />
 
-  </entity>
+	</entity>
 
 </domain-models>

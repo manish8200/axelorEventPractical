@@ -6,9 +6,7 @@ import java.math.BigDecimal;
 
 public interface EventRegService {
 
-  BigDecimal setAmount(Event event, EventRegistration eventReg);
+	BigDecimal setAmount(Event event, EventRegistration eventReg);
 
-  BigDecimal setEventAmount(EventRegistration eventReg);
-
-  EventRegistration calculation(EventRegistration eventRegistration);
+	EventRegistration calculation(EventRegistration eventRegistration);
 }

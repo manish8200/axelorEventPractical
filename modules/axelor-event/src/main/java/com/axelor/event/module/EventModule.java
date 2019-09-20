@@ -8,10 +8,10 @@ import com.axelor.event.service.EventServiceimpl;
 
 public class EventModule extends AxelorModule {
 
-  @Override
-  protected void configure() {
-    // TODO Auto-generated method stub
-    bind(EventService.class).to(EventServiceimpl.class);
-    bind(EventRegService.class).to(EventRegServiceImple.class);
-  }
+	@Override
+	protected void configure() {
+		// TODO Auto-generated method stub
+		bind(EventService.class).to(EventServiceimpl.class);
+		bind(EventRegService.class).to(EventRegServiceImple.class);
+	}
 }

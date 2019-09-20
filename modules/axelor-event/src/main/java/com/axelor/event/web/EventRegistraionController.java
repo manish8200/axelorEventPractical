@@ -9,32 +9,36 @@ import com.google.inject.Inject;
 
 public class EventRegistraionController {
 
-  @Inject EventRegService service;
+	@Inject
+	EventRegService service;
 
-  public void setEventRegList(ActionRequest request, ActionResponse response) {
-    /*    EventRegistration event = request.getContext().asType(EventRegistration.class);*/
+	public void setEventRegList(ActionRequest request, ActionResponse response) {
+		/*
+		 * EventRegistration event =
+		 * request.getContext().asType(EventRegistration.class);
+		 */
 
-    if (request.getContext().getParent() != null) {
-      response.setValue("event", request.getContext().getParent().asType(Event.class));
-      response.setAttr("event", "hidden", true);
-    }
-  }
+		if (request.getContext().getParent() != null) {
+			response.setValue("event", request.getContext().getParent().asType(Event.class));
+			response.setAttr("event", "hidden", true);
+		}
+	}
 
-  public void setEventRegistrationAmount(ActionRequest request, ActionResponse response) {
-    EventRegistration eventReg = request.getContext().asType(EventRegistration.class);
-    if (request.getContext().getParent() == null) {
-      EventRegistration eventreg = service.calculation(eventReg);
-      response.setValue("amount", eventreg.getAmount());
-    }
-  }
+	public void setEventRegistrationAmount(ActionRequest request, ActionResponse response) {
+		EventRegistration eventReg = request.getContext().asType(EventRegistration.class);
+		if (request.getContext().getParent() == null) {
+			EventRegistration eventreg = service.calculation(eventReg);
+			response.setValue("amount", eventreg.getAmount());
+		}
+	}
 
-  public void setAmount(ActionRequest request, ActionResponse response) {
-    EventRegistration eventReg = request.getContext().asType(EventRegistration.class);
+	public void setAmount(ActionRequest request, ActionResponse response) {
+		EventRegistration eventReg = request.getContext().asType(EventRegistration.class);
 
-    if (request.getContext().getParent() != null) {
-      EventRegistration eventRegistartion = service.calculation(eventReg);
+		if (request.getContext().getParent() != null) {
+			EventRegistration eventRegistartion = service.calculation(eventReg);
 
-      response.setValue("amount", eventRegistartion.getAmount());
-    }
-  }
+			response.setValue("amount", eventRegistartion.getAmount());
+		}
+	}
 }

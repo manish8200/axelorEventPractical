@@ -83,26 +83,20 @@
 			<field name="metaFile" title="Input file" type="many-to-one"
 				target="com.axelor.meta.db.MetaFile" widget="binary-link" />
 			<button name="importBtn" colSpan="4" title="Import"
-				readonlyIf="typeSelect == null || metaFile == null" onClick="" />
+				readonlyIf="metaFile == null" onClick="action-method-import-registration" />
 		</panel>
 	</form>
 
-	<form name="generate-event-message-wizard-form" model="com.axelor.apps.base.db.Wizard"
-		title="Generate message" onNew="action-generate-message-group-on-new">
-		<panel name="mainPanel">
-			<field name="_xTemplate" title="Template" widget="SuggestBox"
-				type="MANY_TO_ONE" target="com.axelor.apps.message.db.Template"
-				target-name="name" form-view="template-form" grid-view="template-grid"
-				onSelect="action-method-template-domain" />
-			<field name="language" title="Language" widget="SuggestBox"
-				type="MANY_TO_ONE" target="com.axelor.apps.base.db.Language"
-				target-name="name" form-view="language-form" grid-view="language-grid"
-				onChange="action-on-change-language-template" />
-			<spacer name="languageSpacer" />
-			<button name="validateBtn" title="Validate"
-				onClick="action-event-method-send-Email" />
-		</panel>
-	</form>
+	<!-- <form name="generate-event-message-wizard-form" model="com.axelor.apps.base.db.Wizard" 
+		title="Generate message" onNew="action-generate-message-group-on-new"> <panel 
+		name="wizardPanel" title="Select File" css="panel-blue"> <field name="metaFile" 
+		title="Input file" type="many-to-one" target="com.axelor.meta.db.MetaFile" 
+		widget="binary-link" /> <button name="btnImport" title="Import" onClick="action-method-import-registration,close" 
+		readonlyIf="metaFile == null" /> </panel> </form> -->
+
+	<action-method name="action-method-import-registration">
+		<call class="com.axelor.event.web.EventController" method="EventREgImport" />
+	</action-method>
 
 	<action-view name="action-event-view-send-Email-template"
 		title="action-template-wizard" model="com.axelor.apps.base.db.Wizard">

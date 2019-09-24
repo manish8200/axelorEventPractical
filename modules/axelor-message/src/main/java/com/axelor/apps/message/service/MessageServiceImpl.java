@@ -254,7 +254,6 @@ public class MessageServiceImpl implements MessageService {
   @Transactional(rollbackOn = {MessagingException.class, IOException.class, Exception.class})
   public Message sendByEmail(Message message)
       throws MessagingException, IOException, AxelorException {
-
     EmailAccount mailAccount = message.getMailAccount();
     if (mailAccount == null) {
       return message;

@@ -25,7 +25,7 @@
 			<field name="isEmailSent" />
 			<field name="address" />
 			<field name="registrationDate"
-				onChange="action-eventRegistration-validate-event-registationdate,action-eventRegistration-method-calculate-AmountFromEventForm" />
+				onChange="action-eventRegistration-validate-event-registationdate,action-eventregistration-method-calculate-amount" />
 			<field name="amount" />
 		</panel>
 	</form>
@@ -36,7 +36,7 @@
 	</action-method>
 
 	<action-method
-		name="action-eventRegistration-method-calculate-AmountFromEventForm">
+		name="action-eventregistration-method-calculate-amount">
 		<call class="com.axelor.event.web.EventRegistraionController"
 			method="setEventRegistrationAmount" />
 	</action-method>

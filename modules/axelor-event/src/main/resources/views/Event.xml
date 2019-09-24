@@ -112,7 +112,7 @@
 	</action-method>
 
 	<action-method name="action-event-method-send-Email">
-		<call class="com.axelor.event.web.EventController" method="SendEmail" />
+		<call class="com.axelor.event.web.EventController" method="SentEmail" />
 	</action-method>
 
 	<action-group

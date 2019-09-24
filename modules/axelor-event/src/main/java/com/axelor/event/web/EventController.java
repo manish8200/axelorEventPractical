@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.mail.MessagingException;
 
+import org.apache.poi.openxml4j.opc.RelationshipSource;
+
 import com.axelor.apps.message.db.EmailAddress;
 import com.axelor.apps.message.db.Message;
 import com.axelor.apps.message.db.Template;
@@ -96,54 +98,36 @@ public class EventController {
 			response.setFlash(message);
 		}
 	}
-	public void SendEmail(ActionRequest request, ActionResponse response)
-			throws MessagingException, IOException, AxelorException {
+	
+	
+	public void SentEmail(ActionRequest request, ActionResponse response) throws MessagingException, IOException, AxelorException {
 		Event event = request.getContext().asType(Event.class);
-		List<EventRegistration> eventRegstrationsList = event.getEventRegistrationList();
-		HashSet<EmailAddress> emailAddressSet = new HashSet<EmailAddress>();
-		List<EventRegistration> emailContentList = new ArrayList<EventRegistration>();
-		if (eventRegstrationsList != null) {
-			for (EventRegistration eventRegistration : eventRegstrationsList) {
-				if (eventRegistration.getEmail() != null && !eventRegistration.getIsEmailSent()) {
-					EmailAddress emailAddress = new EmailAddress();
-					EventRegistration eventReg = new EventRegistration();
-					emailAddress.setAddress(eventRegistration.getEmail());
-					emailAddressSet.add(emailAddress);
-					eventReg.setEmail(eventRegistration.getEmail());
-					if(eventReg.getEmail() != null) {
-						eventReg.setName(eventRegistration.getName());
-						eventReg.setAddress(eventRegistration.getAddress());
-						eventReg.setEmail(eventRegistration.getEmail());
-						eventReg.setAmount(eventRegistration.getAmount());
-					}
-					emailContentList.add(eventReg);
-					eventRegistration.setIsEmailSent(true);
-				}
-			}
-			if (!emailAddressSet.isEmpty()) {
-				System.out.println(emailAddressSet);
-				Message message = new Message();
-				Template template = new Template();
+		List<EventRegistration> eventRegistrationList = event.getEventRegistrationList();
+		Message message = new Message();
+		Template template = new Template();
+		if(eventRegistrationList != null) {
+		for (EventRegistration eventRegistration : eventRegistrationList) {
+			template.setContent( " Hi" + " "+ eventRegistration.getName() +  " YourEmailAddress : " + "\n " + eventRegistration.getEmail() + "\n " + 
+		" \n " +  "For Event :" + eventRegistration.getEvent().getReference()  + " Paid Amount is  "  + "\n " +  eventRegistration.getAmount() + " \n " +	"Your Address is :  " + eventRegistration.getAddress().getFullName() + "\t" + " Thank You For SuccessFul Transaction"	 );	
 			
-				for (EventRegistration eventRegistration : emailContentList) {
-					template.setContent("HI " + " "+ eventRegistration.getName() +  " YourEmailAddress : " + " \t" + eventRegistration.getEmail() + "\t " + 
-										"Your Address is :  " + eventRegistration.getAddress().getFullName() + "\t" + " Your Registration is SuceesfullyDone"	 );	
-					message.setMailAccount(Beans.get(EmailAccountRepository.class).all().fetchOne());
-					HashSet<EmailAddress> emailid = new HashSet<EmailAddress>();
-					EmailAddress email = new EmailAddress();
-					email.setAddress(eventRegistration.getEmail());
-					emailid.add(email);
-					message.setToEmailAddressSet(emailid);
-					
-					message.setSubject("Event Registration");
-					message.setTemplate(template);
-					message.setContent("Event regisTered successFully....." );
-					messageService.sendByEmail(message);
-				}
-				response.setFlash("Email Sent successfully");
-			} else {
-				response.setFlash("Email is Not Sent");
-			}
+			System.err.println(" Hi" + " "+ eventRegistration.getName() +  " YourEmailAddress : " + "\n " + eventRegistration.getEmail() + "\n " + 
+		" \n " +  "For Event :" + eventRegistration.getEvent().getReference()  + " Paid Amount is  "  + "\n " +  eventRegistration.getAmount() + " \n " +	"Your Address is :  " + eventRegistration.getAddress().getFullName() + "\t" + " Thank You For SuccessFul Transaction");
+			message.setMailAccount(Beans.get(EmailAccountRepository.class).all().fetchOne());
+			HashSet<EmailAddress> emailid = new HashSet<EmailAddress>();
+			EmailAddress email = new EmailAddress();
+			email.setAddress(eventRegistration.getEmail());
+			emailid.add(email);
+			message.setToEmailAddressSet(emailid);
+			message.setSubject("Event Registration");
+			message.setTemplate(template);
+			System.out.println(template.getContent());
+			message.setContent("Event regisTered successFully....." );
+			eventRegistration.setIsEmailSent(true);
+			messageService.sendByEmail(message);
+			
+			response.setFlash("Email Sent successfully");
 		}
-	}
-}
+		}else {
+			response.setFlash("Email is not Sent");
+		}
+	}	}

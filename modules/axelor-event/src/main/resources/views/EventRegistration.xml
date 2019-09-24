@@ -17,15 +17,15 @@
 
 	<form model="com.axelor.event.db.EventRegistration" title="EventRegistration"
 		name="eventRegistration-form" width="large"
-		onNew="action-EventRegistration-method-hideAndSet-Event">
+		onNew="action-EventRegistration-method-hideAndSet-Event" >
 		<panel title="Event Registration" colSpan="6">
-			<field name="event" onChange="action-eventRegistration-record-get-event-address" />
+			<field name="event" />
 			<field name="name" />
-			<field name="email" widget="email" />
+			<field name="email" widget="Email" pattern="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@+[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$" placeholder="Whatever@gmail.com"  />
 			<field name="isEmailSent" />
 			<field name="address" />
 			<field name="registrationDate"
-				onChange="action-eventRegistration-validate-event-registationdate,action-eventRegistration-method-calculate-AmountFromEventForm,action-eventRegistion-method-calculate-AmountFromEventRegForm" />
+				onChange="action-eventRegistration-validate-event-registationdate,action-eventRegistration-method-calculate-AmountFromEventForm" />
 			<field name="amount" />
 		</panel>
 	</form>
@@ -35,21 +35,10 @@
 			method="setEventRegList" />
 	</action-method>
 
-	<action-record name="action-eventRegistration-record-get-event-address"
-		model="com.axelor.event.db.EventRegistration">
-		<field name="address" expr="eval: event.address" />
-	</action-record>
-
 	<action-method
 		name="action-eventRegistration-method-calculate-AmountFromEventForm">
 		<call class="com.axelor.event.web.EventRegistraionController"
 			method="setEventRegistrationAmount" />
-	</action-method>
-
-	<action-method
-		name="action-eventRegistion-method-calculate-AmountFromEventRegForm">
-		<call class="com.axelor.event.web.EventRegistraionController"
-			method="setAmount" />
 	</action-method>
 
 	<action-validate

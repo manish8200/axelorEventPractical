@@ -1,19 +1,21 @@
 package com.axelor.event.service;
 
-import com.axelor.event.db.Discount;
-import com.axelor.event.db.Event;
-import com.axelor.event.db.EventRegistration;
-import com.axelor.event.db.repo.EventRepository;
-import com.axelor.inject.Beans;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.ZoneId;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-public class EventRegServiceImple implements EventRegService {
+import com.axelor.event.db.Discount;
+import com.axelor.event.db.Event;
+import com.axelor.event.db.EventRegistration;
+import com.axelor.event.db.repo.EventRepository;
+import com.axelor.inject.Beans;
+
+public class EventRegServiceImple implements EventRegistrationService {
 
 	@Override
 	public BigDecimal setAmount(Event event, EventRegistration eventReg) {
@@ -26,7 +28,8 @@ public class EventRegServiceImple implements EventRegService {
 				BigDecimal EventAmount = event.getEventFees();
 
 				List<Discount> discountList = event.getDiscountList();
-
+				discountList.sort(Comparator.comparing(Discount::getBeforeDays));
+				
 				for (Discount discount : discountList) {
 					int differenceOfDays = eventCloseDate.getDayOfMonth() - evenRegDate.getDayOfMonth();
 					System.err.println(differenceOfDays);
@@ -72,6 +75,7 @@ public class EventRegServiceImple implements EventRegService {
 			durations = registrationDate.getDays();
 
 			List<Discount> discountList = event.getDiscountList();
+			discountList.sort(Comparator.comparing(Discount::getBeforeDays));
 			if (event.getEventFees() == null) {
 				amounts = fees;
 			} else if (discountList.isEmpty()) {

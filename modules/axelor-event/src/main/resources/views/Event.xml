@@ -22,29 +22,29 @@
 	</grid>
 
 	<form model="com.axelor.event.db.Event" title="Event" name="event-form"
-		width="large" onSave="action-event-validate-event-TotalEntry">
+		width="large" onSave="action-event-validate-event-TotalEntry" onLoad="action-event-method-recal-eventcalculation,action-event-attrs-set-Total-entry" >
 		<toolbar>
 			<button name="ImportEventBtn" title="Import Events"
-				onClick="action-base-view-import-event-popup" />
+				onClick="save,action-base-view-import-event-popup" />
 			<button name="printEventBtn" title="Print Event"
-				onClick="action-event-report-print-event-reort" icon="fa-files-o" />
+				onClick="save,action-event-report-print-event-reort" icon="fa-files-o" />
 			<button name="sendEmailBtn" title="Send Email"
-				onClick="action-event-method-send-Email" icon="fa-envelope" />
+				onClick="save,action-event-method-send-Email" icon="fa-envelope" />
 		</toolbar>
 		<panel title="Event" colSpan="12">
 			<field name="reference" />
-			<field name="startDate" onChange="action-event-validate-StartDate" />
+			<field name="startDate" onChange="action-event-validate-event-startdate" />
 			<field name="endDate" onChange="action-event-validate-event-Endate" />
 			<field name="address" />
 			<field name="registrationOpen" onChange="action-event-validate-event-Registration-OpenDate" />
-			<field name="registrationClose" onChange="action-event-validate-event-CloseDate" />
+			<field name="registrationClose" onChange="action-event-validate-event-CloseDate"  />
 			<field name="capacity" />
 			<field name="eventFees"
 				onChange="action-event-method-Recalculate-DiscountList-Onchange-eventFees" />
 			<field name="descrition" widget="html" />
 			<field name="discountList" />
 			<field name="eventRegistrationList" canNew="totalEntry != capacity"
-				onChange="action-event-group-set-Eventregistation-Calculation-on-Event-Form-ONChange-EventRegistrationList">
+				onChange="action-event-group-set-Eventregistation-Calculation-onchange-eventregistrationlist">
 			</field>
 			<field name="totalEntry" />
 			<field name="amountCollected" />
@@ -73,12 +73,9 @@
  </template>
 	</cards>
 
-	<selection name="event.type.select">
-		<option value="event">Event</option>
-	</selection>
 
 	<form name="wizard-import-Event-form" title="Import event"
-		model="com.axelor.apps.base.db.Wizard">
+		model="com.axelor.apps.base.db.Wizard" onSave="action-event-method-recal-eventcalculation" >
 		<panel name="wizardPanel">
 			<field name="metaFile" title="Input file" type="many-to-one"
 				target="com.axelor.meta.db.MetaFile" widget="binary-link" />
@@ -87,27 +84,9 @@
 		</panel>
 	</form>
 
-	<!-- <form name="generate-event-message-wizard-form" model="com.axelor.apps.base.db.Wizard" 
-		title="Generate message" onNew="action-generate-message-group-on-new"> <panel 
-		name="wizardPanel" title="Select File" css="panel-blue"> <field name="metaFile" 
-		title="Input file" type="many-to-one" target="com.axelor.meta.db.MetaFile" 
-		widget="binary-link" /> <button name="btnImport" title="Import" onClick="action-method-import-registration,close" 
-		readonlyIf="metaFile == null" /> </panel> </form> -->
-
 	<action-method name="action-method-import-registration">
-		<call class="com.axelor.event.web.EventController" method="EventREgImport" />
+		<call class="com.axelor.event.web.EventController" method="EventRegistrationListImport" />
 	</action-method>
-
-	<action-view name="action-event-view-send-Email-template"
-		title="action-template-wizard" model="com.axelor.apps.base.db.Wizard">
-		<view type="form" name="generate-event-message-wizard-form" />
-		<view-param name="show-toolbar" value="false" />
-		<view-param name="width" value="800" />
-		<view-param name="popup" value="true" />
-		<view-param name="show-confirm" value="false" />
-		<view-param name="popup-save" value="false" />
-		<view-param name="popup" value="reload" />
-	</action-view>
 
 	<action-view name="action-base-view-import-event-popup"
 		title="Import Event" model="com.axelor.apps.base.db.Wizard">
@@ -137,7 +116,7 @@
 	</action-method>
 
 	<action-group
-		name="action-event-group-set-Eventregistation-Calculation-on-Event-Form-ONChange-EventRegistrationList">
+		name="action-event-group-set-Eventregistation-Calculation-onchange-eventregistrationlist">
 		<action name="action-event-attrs-set-Total-entry" />
 		<action name="action-event-method-set-Total-Amount" />
 		<action name="action-event-method-set-Total-DiscountAmount" />
@@ -154,6 +133,9 @@
 		<param name="EventId" expr="eval: id" />
 	</action-report>
 
+	<action-method name="action-event-method-recal-eventcalculation">
+	<call class="com.axelor.event.web.EventController" method="recalculateventcalculation"/>
+	</action-method>
 
 	<action-validate name="action-event-validate-event-TotalEntry">
 		<error message="Total no of Entry Exceeds the Capacity" if="eval: totalEntry &gt; capacity " />
@@ -177,7 +159,7 @@
 	</action-validate>
 
 
-	<action-validate name="action-event-validate-StartDate">
+	<action-validate name="action-event-validate-event-startdate">
 		<error message="Start Date is invalid"
 			if="eval: endDate !=null  &amp;&amp; startDate &gt; endDate " />
 	</action-validate>

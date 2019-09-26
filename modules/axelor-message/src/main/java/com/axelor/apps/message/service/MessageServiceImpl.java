@@ -20,11 +20,9 @@ package com.axelor.apps.message.service;
 import com.axelor.apps.message.db.EmailAccount;
 import com.axelor.apps.message.db.EmailAddress;
 import com.axelor.apps.message.db.Message;
-import com.axelor.apps.message.db.Template;
 import com.axelor.apps.message.db.repo.EmailAccountRepository;
 import com.axelor.apps.message.db.repo.MessageRepository;
 import com.axelor.apps.message.exception.IExceptionMessage;
-import com.axelor.apps.message.web.MailAccountController;
 import com.axelor.auth.AuthUtils;
 import com.axelor.db.JPA;
 import com.axelor.db.Model;
@@ -308,8 +306,8 @@ public class MessageServiceImpl implements MessageService {
     if (!Strings.isNullOrEmpty(message.getContent())) {
       mailBuilder.html(message.getContent());
     }
-    if(!Strings.isNullOrEmpty(message.getTemplate().getContent())) {
-    	mailBuilder.html(message.getTemplate().getContent());
+    if (!Strings.isNullOrEmpty(message.getTemplate().getContent())) {
+      mailBuilder.html(message.getTemplate().getContent());
     }
 
     for (MetaAttachment metaAttachment : getMetaAttachments(message)) {

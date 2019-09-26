@@ -1,52 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <object-views xmlns="http://axelor.com/xml/ns/object-views"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
 
-	<grid model="com.axelor.event.db.EventRegistration" title="EventsRegistration"
-		name="eventRegistration-grid">
-		<field name="flatHouseNo" />
-		<field name="event" />
-		<field name="name" />
-		<field name="email" />
-		<field name="address" />
-		<field name="isEmailSent" />
-		<field name="registrationDate" />
-		<field name="amount" />
-	</grid>
+  <grid model="com.axelor.event.db.EventRegistration" title="EventsRegistration"
+    name="eventRegistration-grid">
+    <field name="flatHouseNo" />
+    <field name="event" />
+    <field name="name" />
+    <field name="email" />
+    <field name="address" />
+    <field name="isEmailSent" />
+    <field name="registrationDate" />
+    <field name="amount" />
+  </grid>
 
-	<form model="com.axelor.event.db.EventRegistration" title="EventRegistration"
-		name="eventRegistration-form" width="large"
-		onNew="action-EventRegistration-method-hideAndSet-Event" >
-		<panel title="Event Registration" colSpan="6">
-			<field name="event" />
-			<field name="name" />
-			<field name="email" widget="Email" pattern="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@+[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$" placeholder="Whatever@gmail.com"  />
-			<field name="isEmailSent" />
-			<field name="address" />
-			<field name="registrationDate"
-				onChange="action-eventRegistration-validate-event-registationdate,action-eventregistration-method-calculate-amount" />
-			<field name="amount" />
-		</panel>
-	</form>
+  <form model="com.axelor.event.db.EventRegistration" title="EventRegistration"
+    name="eventRegistration-form" width="large"
+    onNew="action-event-registration-method-hide-and-set-event" >
+    <panel title="Event Registration" colSpan="6">
+      <field name="event" />
+      <field name="name" />
+      <field name="email" widget="Email" pattern="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@+[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$" placeholder="Whatever@gmail.com"  />
+      <field name="isEmailSent" />
+      <field name="address" />
+      <field name="registrationDate"
+        onChange="action-eventRegistration-validate-event-registation-date,action-eventregistration-method-calculate-amount" />
+      <field name="amount" />
+    </panel>
+  </form>
 
-	<action-method name="action-EventRegistration-method-hideAndSet-Event">
-		<call class="com.axelor.event.web.EventRegistraionController"
-			method="setEventRegList" />
-	</action-method>
+  <action-method name="action-event-registration-method-hide-and-set-event">
+    <call class="com.axelor.event.web.EventRegistrationController"
+      method="setEventRegList" />
+  </action-method>
 
-	<action-method
-		name="action-eventregistration-method-calculate-amount">
-		<call class="com.axelor.event.web.EventRegistraionController"
-			method="setEventRegistrationAmount" />
-	</action-method>
+  <action-method
+    name="action-eventregistration-method-calculate-amount">
+    <call class="com.axelor.event.web.EventRegistrationController"
+      method="setEventRegistrationAmount" />
+  </action-method>
 
-	<action-validate
-		name="action-eventRegistration-validate-event-registationdate">
-		<error message="Registration Close Date Wrong."
-			if="event.registrationClose &lt; registrationDate.toLocalDate()  &amp;&amp;  event.registrationClose != null " />
-		<error message="Registration Open date Wrong"
-			if="event.registrationOpen &gt; registrationDate.toLocalDate()  &amp;&amp;  event.registrationOpen != null " />
-	</action-validate>
+  <action-record name="action-event-registration-null-registration-date" model="com.axelor.event.db.EventRegistration">
+  <field name="registrationDate" expr="eval: null"/>
+  </action-record>
+
+  <action-validate
+    name="action-eventRegistration-validate-event-registation-date">
+    <error message="Registration Date is Invalid"
+      if="event.registrationClose &lt; registrationDate.toLocalDate()  &amp;&amp;  event.registrationClose != null "  action="action-event-registration-null-registration-date"/>
+    <error message="Registration Date is Invalid"
+      if="event.registrationOpen &gt; registrationDate.toLocalDate()  &amp;&amp;  event.registrationOpen != null " action="action-event-registration-null-registration-date" />
+  </action-validate>
 
 </object-views>

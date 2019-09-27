@@ -8,8 +8,7 @@
 
   <menuitem title="Event" name="event-root-event" action="action.event.view.event"
     parent="event-root" />
-  <action-view name="action.event.view.event" title="event.view"
-    model="com.axelor.event.db.Event">
+  <action-view name="action.event.view.event" title="event" model="com.axelor.event.db.Event">
     <view type="cards" name="Event-card" />
     <view type="form" name="event-form" />
     <view type="grid" name="event-grid" />
@@ -19,7 +18,7 @@
   <menuitem title="Event Registration" name="event-root-eventRegistration"
     action="action.eventRegistration.view.eventRegistration" parent="event-root" />
   <action-view name="action.eventRegistration.view.eventRegistration"
-    title="eventReg.view" model="com.axelor.event.db.EventRegistration">
+    title="event registration" model="com.axelor.event.db.EventRegistration">
     <view type="grid" name="eventRegistration-grid" />
     <view type="form" name="eventRegistration-form" />
 
@@ -29,7 +28,7 @@
     action="action.address.view.event.address" parent="event-root" />
 
   <action-view name="action.address.view.event.address"
-    title="address.view" model="com.axelor.event.db.Address">
+    title="address" model="com.axelor.event.db.Address">
     <view type="grid" name="address-grid" />
     <view type="form" name="address-form" />
 

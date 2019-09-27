@@ -1,7 +1,10 @@
 package com.axelor.event.web;
 
+import org.apache.pdfbox.contentstream.operator.state.Save;
+
 import com.axelor.event.db.Event;
 import com.axelor.event.db.EventRegistration;
+import com.axelor.event.db.repo.EventRepository;
 import com.axelor.event.service.EventRegistrationService;
 import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
@@ -9,6 +12,8 @@ import com.google.inject.Inject;
 
 public class EventRegistrationController {
 
+	@Inject EventRepository repo;
+	
   @Inject EventRegistrationService service;
 
   public void setEventRegList(ActionRequest request, ActionResponse response) {
@@ -29,4 +34,6 @@ public class EventRegistrationController {
       response.setValue("amount", eventRegistartion.getAmount());
     }
   }
+
+
 }

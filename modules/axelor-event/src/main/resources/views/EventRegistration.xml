@@ -19,7 +19,7 @@
     name="eventRegistration-form" width="large"
     onNew="action-event-registration-method-hide-and-set-event" >
     <panel title="Event Registration" colSpan="6">
-      <field name="event" />
+      <field name="event" onChange="action-even-registration-validate-registration-capacity" />
       <field name="name" />
       <field name="email" widget="Email" pattern="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@+[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$" placeholder="Whatever@gmail.com"  />
       <field name="isEmailSent" />
@@ -43,6 +43,19 @@
 
   <action-record name="action-event-registration-null-registration-date" model="com.axelor.event.db.EventRegistration">
   <field name="registrationDate" expr="eval: null"/>
+    <field name="amount" expr="eval: null"/>
+  </action-record>
+
+  <action-validate name="action-even-registration-validate-registration-capacity">
+  <error message="Registration Capacity Exceed" if="event.totalEntry &gt;= event.capacity" action="action-event-registration-record-null-event"/>
+  </action-validate>
+  <action-record name="action-event-registration-record-null-event" model="com.axelor.event.db.EventRegistration">
+  <field name="event" expr="eval: null"/>
+  <field name="name" expr="eval: null"/>
+  <field name="email" expr="eval: null"/>
+  <field name="address" expr="eval: null"/>
+  <field name="registrationDate" expr="eval: null"/>
+  <field name="amount" expr="eval: null"/>
   </action-record>
 
   <action-validate
